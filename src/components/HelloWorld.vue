@@ -1,7 +1,8 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-
+    <button @click="run">Go</button>
+    <button @click="runBackgroundSync">Background sync</button>
     <div v-for="i in data" :key="i.id">
       titre : {{ i.title }}
       <br />
@@ -47,9 +48,33 @@ export default {
         .then((e) => (this.data = e.data))
         .catch((e) => console.log(e));
     },
+    runBackgroundSync() {
+      // const placeholderHandler = workbox.strategies.cacheFirst({
+      //   cacheName: "placeholder-cache",
+      // });
+
+      // workbox.routing.registerRoute(
+      //   "https://jsonplaceholder.typicode.com/todos/",
+      //   (args) => {
+      //     return placeholderHandler
+      //       .handle(args)
+      //       .then((response) => {
+      //         console.log("Online: Fetch was called successful");
+      //         return response;
+      //       })
+      //       .catch((err) => {
+      //         console.log("no cache data");
+      //       });
+      //   }
+      // );
+      axios
+        .post("https://jsonplaceholder.typicode.com/posts")
+        .then((e) => (this.data = e.data))
+        .catch((e) => console.log(e));
+    },
   },
   created() {
-    this.run();
+    
   },
 };
 </script>
