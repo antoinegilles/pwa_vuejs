@@ -10,13 +10,12 @@ module.exports = {
         workboxPluginMode: 'InjectManifest',
         workboxOptions: {
             swSrc: 'src/service-worker.js',
-            importScripts: ['idb.js']
         },
-        themeColor: "#42b983",
-        msTileColor: "#42b983",
-        appleMobileWebAppCache: "yes",
-        manifestOptions: {
-            background_color: "#42b983",
-        },
+        // themeColor: "#42b983",
+        // msTileColor: "#42b983",
+        // appleMobileWebAppCache: "yes",
+        // manifestOptions: {
+        //     background_color: "#42b983",
+        // },
     }
 };

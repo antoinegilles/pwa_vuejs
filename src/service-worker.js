@@ -1,19 +1,23 @@
+workbox.precaching.precacheAndRoute([{
+    "revision": "17ecfaee522eaf5b3ad9c9aa1b2973cc",
+    "url": "/manifest.json"
+}]);
+
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-import { BackgroundSyncPlugin } from 'workbox-background-sync';
-import { registerRoute } from 'workbox-routing';
-import { NetworkOnly } from 'workbox-strategies';
 
-const bgSyncPlugin = new BackgroundSyncPlugin('myQueueName', {
-    maxRetentionTime: 24 * 60 // Retry for max of 24 Hours (specified in minutes)
+const placeholderHandler = workbox.strategies.cacheFirst({
+    cacheName: 'placeholder-cache',
 });
 
-registerRoute(
-    'https://jsonplaceholder.typicode.com/posts',
-    new NetworkOnly({
-        plugins: [bgSyncPlugin]
-    }),
-    'POST'
-);
+workbox.routing.registerRoute('https://jsonplaceholder.typicode.com/todos/1', args => {
+    return placeholderHandler.handle(args).then(response => {
+        console.log("Online: Fetch was called successful");
+        return response;
+    }).catch(err => {
+        console.log("no cache data");
+    });
+});
+

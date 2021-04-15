@@ -12,13 +12,6 @@
 
 <script>
 const axios = require("axios");
-import { BackgroundSyncPlugin } from "workbox-background-sync";
-import { registerRoute } from "workbox-routing";
-import { NetworkOnly } from "workbox-strategies";
-
-const bgSyncPlugin = new BackgroundSyncPlugin("myQueueName", {
-  maxRetentionTime: 24 * 60, // Retry for max of 24 Hours (specified in minutes)
-});
 
 export default {
   name: "HelloWorld",
@@ -32,60 +25,16 @@ export default {
   },
   methods: {
     run() {
-      // const placeholderHandler = workbox.strategies.cacheFirst({
-      //   cacheName: "placeholder-cache",
-      // });
-
-      // workbox.routing.registerRoute(
-      //   "https://jsonplaceholder.typicode.com/todos/",
-      //   (args) => {
-      //     return placeholderHandler
-      //       .handle(args)
-      //       .then((response) => {
-      //         console.log("Online: Fetch was called successful");
-      //         return response;
-      //       })
-      //       .catch((err) => {
-      //         console.log("no cache data");
-      //       });
-      //   }
-      // );
       axios
-        .get("https://jsonplaceholder.typicode.com/todos/")
-        .then((e) => (this.data = e.data))
+        .get("https://jsonplaceholder.typicode.com/todos/1")
+        .then((e) => console.log(e))
         .catch((e) => console.log(e));
     },
     runBackgroundSync() {
-      // const placeholderHandler = workbox.strategies.cacheFirst({
-      //   cacheName: "placeholder-cache",
-      // });
-
-      // workbox.routing.registerRoute(
-      //   "https://jsonplaceholder.typicode.com/todos/",
-      //   (args) => {
-      //     return placeholderHandler
-      //       .handle(args)
-      //       .then((response) => {
-      //         console.log("Online: Fetch was called successful");
-      //         return response;
-      //       })
-      //       .catch((err) => {
-      //         console.log("no cache data");
-      //       });
-      //   }
-      // );
       axios
         .post("https://jsonplaceholder.typicode.com/posts")
         .then((e) => (this.data = e.data))
-        .catch(() => {
-          registerRoute(
-            "https://jsonplaceholder.typicode.com/posts",
-            new NetworkOnly({
-              plugins: [bgSyncPlugin],
-            }),
-            "POST"
-          );
-        });
+        .catch((e) => console.log(e));
     },
   },
   created() {},

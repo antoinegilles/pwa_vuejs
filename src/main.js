@@ -3,9 +3,7 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
-import {SchemaSyncHandler} from './schemasync';
 
-SchemaSyncHandler.sync();
 
 Vue.config.productionTip = false
 
